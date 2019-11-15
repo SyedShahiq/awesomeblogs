@@ -19,7 +19,7 @@ def single_post_view(request,id):
 		if request.method == 'POST':
 			comment = request.POST.get('content')
 			Comment.objects.create(content=comment, post=post)
-			form = commentForm()
+			return redirect("/post/"+str(id))
 	except Post.DoesNotExist:
 		return redirect("/")
 
