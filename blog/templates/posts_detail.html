@@ -11,7 +11,7 @@
 			<p class="article-content">{{ post.content }}</p>
 		</div>
 	</article>
-	<form method="post">
+	<form method="post" class="comment-form">
 		{% csrf_token %}
 	  {{comments_form|crispy}}
 	  <input type="submit" class="btn btn-primary" value="Comment">
@@ -19,7 +19,7 @@
 	<ul>
 	{% for comment in comments %}
 		<li>
-			<p>{{comment.content}} <span><strong>{{comment.date_posted}}</span></strong></p>
+			<p>{{comment.content|safe}} <span><strong>{{comment.date_posted}}</span></strong></p>
 		</li>
 	{% endfor %}
 	</ul>
