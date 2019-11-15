@@ -10,4 +10,11 @@
 			<p class="article-content">{{ post.content }}</p>
 		</div>
 	</article>
+	<ul>
+	{% for comment in comments %}
+		<li>
+			<p>{{comment.content}} <span><strong>{{comment.date_posted}}</span></strong></p>
+		</li>
+	{% endfor %}
+	</ul>
 {% endblock %}
