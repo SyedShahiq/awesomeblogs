@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from .models import Post
 from comments.models import Comment
 from comments.forms import commentForm
-
+from django.http import JsonResponse
+from django.core import serializers
+import json
 # Create your views here.
 def home_view(request,*arg,**kwargs):
 	return render(request,'home.html',{})
@@ -29,3 +31,9 @@ def single_post_view(request,id):
 		'comments_form':form
 	}
 	return render(request,'posts_detail.html',context)
+
+def fetchAllPosts(request):
+	posts = Post.objects.all()
+	tmpJson = serializers.serialize("json",posts)
+	tmpObj = json.loads(tmpJson)
+	return JsonResponse({'posts':tmpJson})
