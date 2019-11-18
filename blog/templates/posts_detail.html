@@ -11,16 +11,18 @@
 			<p class="article-content">{{ post.content }}</p>
 		</div>
 	</article>
-	<form method="post" class="comment-form">
-		{% csrf_token %}
-	  {{comments_form|crispy}}
-	  <input type="submit" class="btn btn-primary" value="Comment">
-	</form>
-	<ul>
-	{% for comment in comments %}
-		<li>
-			<p>{{comment.content|safe}} <span><strong>{{comment.date_posted}}</span></strong></p>
-		</li>
-	{% endfor %}
-	</ul>
+	{% if user.is_authenticated %}
+		<form method="post" class="comment-form">
+			{% csrf_token %}
+		  {{comments_form|crispy}}
+		  <input type="submit" class="btn btn-primary" value="Comment">
+		</form>
+		<ul>
+		{% for comment in comments %}
+			<li>
+				<p>{{comment.content|safe}} <span><strong>{{comment.date_posted}}</span></strong><strong> Posted by:{{comment.user.username}}</strong></p>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
 {% endblock %}
