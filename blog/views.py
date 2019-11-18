@@ -16,7 +16,7 @@ def posts_view(request,*arg,**kwargs):
 def single_post_view(request,id):
 	try:
 		post = Post.objects.get(id=id)
-		comments = Comment.objects.filter(post=id)
+		comments = Comment.objects.filter(post=id).order_by('-id')
 		form = commentForm(request.POST or None)
 		if request.method == 'POST' and form.is_valid():
 			comment = request.POST.get('content')
