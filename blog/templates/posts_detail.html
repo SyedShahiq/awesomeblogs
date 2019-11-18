@@ -17,10 +17,12 @@
 		  {{comments_form|crispy}}
 		  <input type="submit" class="btn btn-primary" value="Comment">
 		</form>
-		<ul>
+		<ul class="comments">
 		{% for comment in comments %}
 			<li>
-				<p>{{comment.content|safe}} <span><strong>{{comment.date_posted |date:"F d, Y"}}</span></strong><strong> Posted by:{{comment.user.username}}</strong></p>
+				<p class="content">{{comment.content|safe}}</p>
+				<div class="date"><strong>Date: {{comment.date_posted |date:"F d, Y"}}</strong></div>
+				<div class="username"><strong> Posted by:{{comment.user.username}}</strong></div>
 			</li>
 		{% endfor %}
 		</ul>
