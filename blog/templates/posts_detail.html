@@ -20,7 +20,7 @@
 		<ul>
 		{% for comment in comments %}
 			<li>
-				<p>{{comment.content|safe}} <span><strong>{{comment.date_posted}}</span></strong><strong> Posted by:{{comment.user.username}}</strong></p>
+				<p>{{comment.content|safe}} <span><strong>{{comment.date_posted |date:"F d, Y"}}</span></strong><strong> Posted by:{{comment.user.username}}</strong></p>
 			</li>
 		{% endfor %}
 		</ul>
