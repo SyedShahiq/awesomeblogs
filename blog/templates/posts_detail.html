@@ -20,14 +20,21 @@
 		<ul class="comments">
 		{% for comment in comments %}
 			<li>
-				<p class="content">{{comment.content|safe}}</p>
-				<div class="date"><strong>Date: {{comment.date_posted |date:"F d, Y"}}</strong></div>
-				<div class="username"><strong> Posted by:{{comment.user.username}}</strong></div>
+				<p class="content">{{comment.content|safe}}<span class="date"><small>  {{comment.date_posted |date:"F d, Y"}}</small></span>
+					<span class="username"><small>,{{comment.user.username}}</small></span></p>
 				{% for reply in replies %}
 					{% if comment.id == reply.comment.id %}
-					<p>{{reply.content}}</p>
+					<p><strong>Reply:</strong> {{reply.content}}</p>
 					{% endif %}
 				{% endfor %}
+				<div class="row">
+					<div class="col-sm-10">
+						<input type="text" name="reply" id="{{comment.id}}" class="form-control reply">
+					</div>
+					<div class="col-sm-2">
+						<button class="btn btn-primary reply-btn">Reply</button>
+					</div>
+				</div>
 			</li>
 		{% endfor %}
 		</ul>
