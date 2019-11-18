@@ -86,3 +86,16 @@ a.article-title:hover {
 .comment-form textarea {
   max-height: 130px;
 }
+
+.comments {
+  margin-top:20px;
+}
+
+.comments li {
+  list-style: none;
+  margin-left: -37px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
