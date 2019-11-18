@@ -10,7 +10,7 @@ $(document).ready(function() {
 			url: '/create-new-reply/',
 			headers: { "X-CSRFToken": $.cookie("csrftoken") },
 			success: function(data){
-				console.log("device control succeeded");
+				window.location.reload();
 			},
 			error: function(){
 				console.log("Device control failed");

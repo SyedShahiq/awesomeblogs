@@ -24,7 +24,7 @@
 					<span class="username"><small>,{{comment.user.username}}</small></span></p>
 				{% for reply in replies %}
 					{% if comment.id == reply.comment.id %}
-					<p><strong>Reply:</strong> {{reply.content}}</p>
+					<p><strong>{{reply.user.username}}: </strong> {{reply.content}}</p>
 					{% endif %}
 				{% endfor %}
 				<div class="row">
