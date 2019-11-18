@@ -16,7 +16,7 @@ def single_post_view(request,id):
 		post = Post.objects.get(id=id)
 		comments = Comment.objects.filter(post=id)
 		form = commentForm(request.POST or None)
-		if request.method == 'POST':
+		if request.method == 'POST' and form.is_valid():
 			comment = request.POST.get('content')
 			Comment.objects.create(content=comment, post=post, user=request.user)
 			return redirect("/post/"+str(id))
