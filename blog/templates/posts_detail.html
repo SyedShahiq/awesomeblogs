@@ -23,6 +23,11 @@
 				<p class="content">{{comment.content|safe}}</p>
 				<div class="date"><strong>Date: {{comment.date_posted |date:"F d, Y"}}</strong></div>
 				<div class="username"><strong> Posted by:{{comment.user.username}}</strong></div>
+				{% for reply in replies %}
+					{% if comment.id == reply.comment.id %}
+					<p>{{reply.content}}</p>
+					{% endif %}
+				{% endfor %}
 			</li>
 		{% endfor %}
 		</ul>

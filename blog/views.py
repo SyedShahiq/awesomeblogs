@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Post
-from comments.models import Comment
+from comments.models import Comment,Reply
 from comments.forms import commentForm
 from django.http import JsonResponse
 from django.core import serializers
@@ -17,6 +17,10 @@ def single_post_view(request,id):
 	try:
 		post = Post.objects.get(id=id)
 		comments = Comment.objects.filter(post=id).order_by('-id')
+		comment_ids_list = []
+		for comment in comments:
+			comment_ids_list.append(comment.id)
+		replies = Reply.objects.filter(comment__in = comment_ids_list)
 		form = commentForm(request.POST or None)
 		if request.method == 'POST' and form.is_valid():
 			comment = request.POST.get('content')
@@ -28,7 +32,8 @@ def single_post_view(request,id):
 	context = {
 		'post':post,
 		'comments':comments,
-		'comments_form':form
+		'comments_form':form,
+		'replies':replies
 	}
 	return render(request,'posts_detail.html',context)
 
