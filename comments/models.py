@@ -8,3 +8,9 @@ class Comment(models.Model):
 	date_posted = models.DateTimeField(default = timezone.now)
 	post = models.ForeignKey(Post, on_delete = models.CASCADE)
 	user = models.ForeignKey(User,on_delete = models.CASCADE,default=1)
+
+class Reply(models.Model):
+	content = models.TextField()
+	date_posted = models.DateTimeField(default = timezone.now)
+	comment = models.ForeignKey(Comment,on_delete = models.CASCADE)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
