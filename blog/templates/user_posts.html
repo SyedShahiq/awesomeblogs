@@ -13,9 +13,3 @@
 		</article>
 	{% endfor%}
 {% endblock %}
-{% block sidebar %}
-	<h3>Users:</h3>
-	{% for user in users %}
-		<a href="/post/user/{{user.id}}"><p>{{user.username}}</p></a>
-	{% endfor %}
-{% endblock %}

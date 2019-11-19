@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Post
+from django.contrib.auth.models import User
 from comments.models import Comment,Reply
 from comments.forms import commentForm
 from django.http import JsonResponse
@@ -11,7 +12,12 @@ def home_view(request,*arg,**kwargs):
 
 def posts_view(request,*arg,**kwargs):
 	posts = Post.objects.all()
-	return render(request,'posts.html',{'posts':posts})
+	users = User.objects.all()
+	return render(request,'posts.html',{'posts':posts,'users':users})
+
+def posts_by_user(request,id):
+	posts = Post.objects.filter(author=id)
+	return render(request,'user_posts.html',{'posts':posts})
 
 def single_post_view(request,id):
 	try:
@@ -43,4 +49,9 @@ def fetchAllPosts(request):
 	posts = Post.objects.all()
 	tmpJson = serializers.serialize("json",posts)
 	tmpObj = json.loads(tmpJson)
-	return JsonResponse({'posts':tmpJson})
+	response = JsonResponse({'posts':tmpJson})
+	response["Access-Control-Allow-Origin"] = "*"
+	response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+	response["Access-Control-Max-Age"] = "1000"
+	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+	return response
