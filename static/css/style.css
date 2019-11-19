@@ -99,3 +99,7 @@ a.article-title:hover {
   background-color: #ffffff;
   border: 1px solid #dddddd;
 }
+
+.content-section a:hover {
+  text-decoration: none;
+}
