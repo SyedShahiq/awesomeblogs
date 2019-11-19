@@ -102,4 +102,5 @@ a.article-title:hover {
 
 .content-section a:hover {
   text-decoration: none;
+  color: #428bca;
 }
