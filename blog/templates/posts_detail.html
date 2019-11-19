@@ -39,5 +39,11 @@
 			</li>
 		{% endfor %}
 		</ul>
+	{% else %}
+	 <p>You must login to review comments section</p>
 	{% endif %}
+{% endblock %}
+{% block sidebar %}
+	<h2><a class="article-title" href="/post/{{last_post.id}}">{{ last_post.title }}</a></h2>
+	<p class="article-content">{{ last_post.content|truncatechars:200 }}</p>
 {% endblock %}

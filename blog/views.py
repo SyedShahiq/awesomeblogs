@@ -15,6 +15,7 @@ def posts_view(request,*arg,**kwargs):
 
 def single_post_view(request,id):
 	try:
+		last_post = Post.objects.last()
 		post = Post.objects.get(id=id)
 		comments = Comment.objects.filter(post=id).order_by('-id')
 		comment_ids_list = []
@@ -33,7 +34,8 @@ def single_post_view(request,id):
 		'post':post,
 		'comments':comments,
 		'comments_form':form,
-		'replies':replies
+		'replies':replies,
+		'last_post':last_post
 	}
 	return render(request,'posts_detail.html',context)
 
