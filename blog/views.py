@@ -16,8 +16,8 @@ def posts_view(request,*arg,**kwargs):
 	return render(request,'posts.html',{'posts':posts,'users':users})
 
 def posts_by_user(request,id):
-	posts = Post.objects.filter(author=id)
-	return render(request,'user_posts.html',{'posts':posts})
+	user_posts = Post.objects.filter(author=id)
+	return render(request,'user_posts.html',{'posts':user_posts})
 
 def single_post_view(request,id):
 	try:
