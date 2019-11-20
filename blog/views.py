@@ -11,7 +11,7 @@ def home_view(request,*arg,**kwargs):
 	return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
-	posts = Post.objects.all()
+	posts = Post.objects.all().order_by('-id')
 	users = User.objects.all()
 	return render(request,'posts.html',{'posts':posts,'users':users})
 
