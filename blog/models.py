@@ -11,3 +11,4 @@ class Post(models.Model):
 class emotions(models.Model):
 	like = models.BooleanField()
 	post = models.ForeignKey(Post, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user
+from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user,add_emotion
 from user_profile.views import user_registration
 from comments.views import createNewReply
 from django.contrib.auth import views as auth_views
@@ -29,5 +29,6 @@ urlpatterns = [
     path('create-new-reply/',createNewReply,name='new-reply'),
     path('user/register/',user_registration,name='user-register'),
     path('logout/',auth_views.logout,name="logout"),
+    path('like/<int:id>',add_emotion,name="like"),
     path('admin/', admin.site.urls),
 ]

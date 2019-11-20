@@ -4,10 +4,11 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers
+from django.db.models import Count
 
 from comments.models import Comment,Reply
 from comments.forms import commentForm
-from .models import Post
+from .models import Post,emotions
 
 # Create your views here.
 def home_view(request,*arg,**kwargs):
@@ -16,7 +17,8 @@ def home_view(request,*arg,**kwargs):
 def posts_view(request,*arg,**kwargs):
 	posts = Post.objects.all().order_by('-id')
 	users = User.objects.all()
-	return render(request,'posts.html',{'posts':posts,'users':users})
+	likes = emotions.objects.values('post_id').annotate(count=Count('post_id'))
+	return render(request,'posts.html',{'posts':posts,'users':users,'likes':likes})
 
 def posts_by_user(request,id):
 	user_posts = Post.objects.filter(author=id)
@@ -58,3 +60,13 @@ def fetchAllPosts(request):
 	response["Access-Control-Max-Age"] = "1000"
 	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
 	return response
+
+def add_emotion(request,id):
+	if request.method == 'POST':
+		post = Post.objects.get(id=id)
+		check_present_emotion = emotions.objects.filter(user=request.user).filter(post=post)
+		if check_present_emotion.count() == 0:
+			emotions.objects.create(like=1,post=post,user=request.user)
+		else:
+			return JsonResponse({'like':'false'})
+	return JsonResponse({'like':'true'})

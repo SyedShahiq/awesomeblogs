@@ -23,4 +23,23 @@ $(document).ready(function() {
 			});
 		}
 	})
+	$('.like').click(function(){
+		var id = $(this).attr('id');
+		$.ajax({
+			contentType: 'application/json',
+			dataType: 'json',
+			type: 'POST',
+			url: '/like/'+id,
+			headers: { "X-CSRFToken": $.cookie("csrftoken") },
+			success: function(data){
+				console.log(data.like);
+				if (data.like == 'true') {
+					window.location.reload();
+				}
+			},
+			error: function(){
+				console.log("Device control failed");
+			},
+		});
+	})
 });
