@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'comments',
     'crispy_forms',
+    'user_profile'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGOUT_REDIRECT_URL = 'posts'
