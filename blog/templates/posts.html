@@ -9,11 +9,7 @@
 		    </div>
 		    <h2><a class="article-title" href="/post/{{post.id}}">{{ post.title }}</a></h2>
 		    <p class="article-content">{{ post.content }}</p>
-		    {% for like in likes %}
-		      {% if post.id == like.post_id and like.count > 0 %}
-		       <p class="like" id="{{post.id}}">LIKE <span class="count">{{ like.count }}</span></p>
-		      {% endif %}
- 				{% endfor %}
+		    <p class="like" id="{{post.id}}">LIKE <span class="count">{{ post.count }}</span></p>
 		  </div>
 		</article>
 	{% endfor%}

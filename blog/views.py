@@ -15,10 +15,9 @@ def home_view(request,*arg,**kwargs):
 	return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
-	posts = Post.objects.all().order_by('-id')
+	posts = Post.objects.raw('SELECT blog_post.id , blog_post.title ,blog_post.content,blog_post.date_posted,blog_post.author_id, COUNT(blog_emotions.post_id) as count FROM blog_post LEFT JOIN blog_emotions ON blog_post.id = blog_emotions.post_id GROUP BY blog_post.id ORDER BY blog_post.id DESC')
 	users = User.objects.all()
-	likes = emotions.objects.values('post_id').annotate(count=Count('post_id'))
-	return render(request,'posts.html',{'posts':posts,'users':users,'likes':likes})
+	return render(request,'posts.html',{'posts':posts,'users':users})
 
 def posts_by_user(request,id):
 	user_posts = Post.objects.filter(author=id)
