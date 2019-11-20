@@ -1,11 +1,14 @@
+import json
+
 from django.shortcuts import render,redirect
-from .models import Post
 from django.contrib.auth.models import User
-from comments.models import Comment,Reply
-from comments.forms import commentForm
 from django.http import JsonResponse
 from django.core import serializers
-import json
+
+from comments.models import Comment,Reply
+from comments.forms import commentForm
+from .models import Post
+
 # Create your views here.
 def home_view(request,*arg,**kwargs):
 	return render(request,'home.html',{})

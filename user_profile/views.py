@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
-from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login
+
+from .forms import UserRegisterForm
 # Create your views here.
 def user_registration(request):
 	if request.user.is_authenticated:

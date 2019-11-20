@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from .models import Reply,Comment
-from django.http import JsonResponse
 import json
+
+from django.shortcuts import render
+from django.http import JsonResponse
+
+from .models import Reply,Comment
+
 # Create your views here.
 def createNewReply(request):
 	print(request.body)
