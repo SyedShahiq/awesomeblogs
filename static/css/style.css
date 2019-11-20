@@ -104,3 +104,13 @@ a.article-title:hover {
   text-decoration: none;
   color: #428bca;
 }
+
+.like {
+  background: #5f788a;
+  width: 60px;
+  padding: 4px;
+  color: white;
+}
+.like:hover {
+  cursor: pointer;
+}
