@@ -21,7 +21,7 @@ def posts_view(request,*arg,**kwargs):
 	return render(request,'posts.html',{'posts':posts,'users':users})
 
 def posts_by_user(request,id):
-	user_posts = Post.objects.filter(author=id)
+	user_posts = Post.objects.filter(author=id).order_by('-id')
 	return render(request,'user_posts.html',{'posts':user_posts})
 
 def single_post_view(request,id):
@@ -79,3 +79,11 @@ def edit_posts(request,id):
 		form.save()
 		return redirect("posts")
 	return render(request,'posts_edit.html',{'form':form,'post_title':title})
+
+def create_posts(request):
+	form = PostEditForm(request.POST or None)
+	if form.is_valid():
+		form.instance.author = request.user
+		form.save()
+		return redirect("posts")
+	return render(request,'posts_creation.html',{'form':form})
