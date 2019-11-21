@@ -12,10 +12,30 @@
 		    {% if user.id == post.author.id %}
 		    <div class="actions">
 		    	<a href="/post/edit/{{post.id}}" class="btn btn-success btn-sm">EDIT</a>
-		    	<a href="" class="btn btn-danger btn-sm">DELETE</a>
+		    	<a href="" id="{{post.id}}" class="btn btn-danger btn-sm delete" data-toggle="modal" data-target="#exampleModal">DELETE</a>
 		    </div>
 		    {% endif %}
 		  </div>
 		</article>
 	{% endfor%}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form method="post">
+		{% csrf_token %}
+		<div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Post Delete Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a type="submit" href="/" class="btn btn-primary delete-confirm">Delete</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 {% endblock %}

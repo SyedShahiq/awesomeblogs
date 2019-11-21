@@ -42,4 +42,9 @@ $(document).ready(function() {
 			},
 		});
 	})
+	$('.delete').click(function(e){
+		e.preventDefault();
+		var post_id = $(this).attr('id');
+		$('.delete-confirm').attr('href','/post/delete/'+post_id);
+	})
 });

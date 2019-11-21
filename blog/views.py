@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from comments.models import Comment,Reply
 from comments.forms import commentForm
@@ -89,3 +90,13 @@ def create_posts(request):
 		form.save()
 		return redirect("posts")
 	return render(request,'posts_creation.html',{'form':form})
+
+def delete_post(request,id):
+	query = Post.objects.get(id=id)
+	if query.author == request.user:
+		query.delete()
+		messages.success(request,'Post Deleted Successfully')
+		return redirect("/post/user/"+str(request.user.id))
+	else:
+		messages.error(request,'Unable to delete this post')
+		return redirect("home")
