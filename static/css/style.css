@@ -107,10 +107,16 @@ a.article-title:hover {
 
 .like {
   background: #5f788a;
-  width: 60px;
-  padding: 4px;
+  width: max-content;
+  padding-top: 6px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 28px;
   color: white;
+  height: 32px;
+  border-radius:4px;
 }
+
 .like:hover {
   cursor: pointer;
 }

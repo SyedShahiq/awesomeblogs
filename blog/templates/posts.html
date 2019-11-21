@@ -9,7 +9,9 @@
 		    </div>
 		    <h2><a class="article-title" href="/post/{{post.id}}">{{ post.title }}</a></h2>
 		    <p class="article-content">{{ post.content }}</p>
-		    <p class="like" id="{{post.id}}">LIKE <span class="count">{{ post.count }}</span></p>
+		    <div class="like">
+		    	<p  id="{{post.id}}">LIKE <span class="count">{{ post.count }}</span></p>
+		  	</div>
 		  </div>
 		</article>
 	{% endfor%}
