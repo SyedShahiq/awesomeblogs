@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 from comments.models import Comment,Reply
 from comments.forms import commentForm
@@ -71,6 +72,7 @@ def add_emotion(request,id):
 			return JsonResponse({'like':'false'})
 	return JsonResponse({'like':'true'})
 
+@login_required
 def edit_posts(request,id):
 	post = Post.objects.get(id=id)
 	title = post.title
