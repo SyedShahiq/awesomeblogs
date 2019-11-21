@@ -8,6 +8,7 @@ from django.db.models import Count
 
 from comments.models import Comment,Reply
 from comments.forms import commentForm
+from .forms import PostEditForm
 from .models import Post,emotions
 
 # Create your views here.
@@ -69,3 +70,12 @@ def add_emotion(request,id):
 		else:
 			return JsonResponse({'like':'false'})
 	return JsonResponse({'like':'true'})
+
+def edit_posts(request,id):
+	post = Post.objects.get(id=id)
+	title = post.title
+	form = PostEditForm(request.POST or None,instance=post)
+	if form.is_valid():
+		form.save()
+		return redirect("posts")
+	return render(request,'posts_edit.html',{'form':form,'post_title':title})
