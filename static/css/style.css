@@ -114,3 +114,6 @@ a.article-title:hover {
 .like:hover {
   cursor: pointer;
 }
+.actions a:hover {
+  color: white;
+}
