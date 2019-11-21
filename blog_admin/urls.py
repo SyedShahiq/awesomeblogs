@@ -29,6 +29,7 @@ urlpatterns = [
     path('create-new-reply/',createNewReply,name='new-reply'),
     path('user/register/',user_registration,name='user-register'),
     path('logout/',auth_views.logout,name="logout"),
+    path('login/',auth_views.LoginView.as_view(template_name='login.html'),name="Login"),
     path('like/<int:id>',add_emotion,name="like"),
     path('admin/', admin.site.urls),
 ]
