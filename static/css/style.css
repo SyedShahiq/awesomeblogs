@@ -115,6 +115,22 @@ a.article-title:hover {
   color: white;
   height: 32px;
   border-radius:4px;
+  display: inline-block;
+}
+.comment {
+  background: #5f788a;
+  width: max-content;
+  padding-top: 6px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 28px;
+  color: white;
+  height: 32px;
+  border-radius:4px;
+  display: inline-block;
+}
+.comment a,.comment a:hover {
+  color: white
 }
 
 .like:hover {
