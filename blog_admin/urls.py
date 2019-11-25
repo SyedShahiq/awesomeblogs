@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user,add_emotion,edit_posts,create_posts,delete_post
-from user_profile.views import user_registration
+from user_profile.views import user_registration,fetch_user_detail
 from comments.views import createNewReply
 from django.contrib.auth import views as auth_views
 
@@ -34,5 +34,6 @@ urlpatterns = [
     path('logout/',auth_views.logout,name="logout"),
     path('login/',auth_views.LoginView.as_view(template_name='login.html'),name="Login"),
     path('like/<int:id>',add_emotion,name="like"),
+    path('api/user/<int:id>',fetch_user_detail,name='user-details'),
     path('admin/', admin.site.urls),
 ]
