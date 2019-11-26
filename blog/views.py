@@ -63,6 +63,17 @@ def fetchAllPosts(request):
 	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
 	return response
 
+def posts_by_user_api(request,id):
+    user_posts = Post.objects.filter(author=id).order_by('-id')
+    tmpJson = serializers.serialize("json",user_posts)
+    tmpObj = json.loads(tmpJson)
+    response = JsonResponse({'posts':tmpJson})
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+    return response
+
 def add_emotion(request,id):
 	if request.method == 'POST':
 		post = Post.objects.get(id=id)

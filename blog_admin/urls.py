@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user,add_emotion,edit_posts,create_posts,delete_post
+from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user,add_emotion,edit_posts,create_posts,delete_post,posts_by_user_api
 from user_profile.views import user_registration,fetch_user_detail
 from comments.views import createNewReply
 from django.contrib.auth import views as auth_views
@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/posts/',fetchAllPosts,name='api-posts'),
     path('post/<int:id>',single_post_view,name='single-post'),
     path('post/user/<int:id>',posts_by_user,name='post-by-users'),
+    path('api/post/user/<int:id>',posts_by_user_api,name='post-by-users-api'),
     path('post/edit/<int:id>',edit_posts,name="post-edit"),
     path('post/create/',create_posts,name='post-create'),
     path('post/delete/<int:id>',delete_post,name='delete-post'),
