@@ -24,7 +24,7 @@ $(document).ready(function() {
 		}
 	})
 	$('.like').click(function(){
-		var id = $(this).attr('id');
+		var id = $(this).children('p').attr('id')
 		$.ajax({
 			contentType: 'application/json',
 			dataType: 'json',
