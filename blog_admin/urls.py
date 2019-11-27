@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from blog.views import home_view,posts_view,single_post_view,fetchAllPosts,posts_by_user,add_emotion,edit_posts,create_posts,delete_post,posts_by_user_api
 from user_profile.views import user_registration,fetch_user_detail,fetch_all_users
 from comments.views import createNewReply
 from django.contrib.auth import views as auth_views
+from .router import router
 
 urlpatterns = [
 	path('',home_view,name='home'),
@@ -38,4 +39,5 @@ urlpatterns = [
     path('api/user/<int:id>',fetch_user_detail,name='user-details'),
     path('api/users/',fetch_all_users,name="fetch-all-users"),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls), name='api')
 ]
