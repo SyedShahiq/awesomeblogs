@@ -33,3 +33,14 @@ def fetch_user_detail(request,id):
 	response["Access-Control-Max-Age"] = "1000"
 	response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
 	return response
+
+def fetch_all_users(request):
+    users = User.objects.all()
+    tmpJson = serializers.serialize("json",users)
+    tmpObj = json.loads(tmpJson)
+    response = JsonResponse({'users':tmpJson})
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+    return response
