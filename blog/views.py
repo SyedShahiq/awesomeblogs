@@ -1,4 +1,5 @@
 import json
+import redis
 
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
@@ -6,6 +7,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login
 from django.contrib import messages
 
 from comments.models import Comment,Reply
@@ -15,7 +17,12 @@ from .models import Post,emotions
 
 # Create your views here.
 def home_view(request,*arg,**kwargs):
-	return render(request,'home.html',{})
+    r = redis.Redis(host='127.0.0.1', port=6379, db=0)
+    user = json.loads(r.get('user'))
+    user_obj = user['user']
+    try_login = authenticate(username=user_obj['username'],password=user_obj['password'])
+    login(request,try_login)
+    return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
 	posts = Post.objects.raw('SELECT blog_post.id , blog_post.title ,blog_post.content,blog_post.date_posted,blog_post.author_id, COUNT(blog_emotions.post_id) as count FROM blog_post LEFT JOIN blog_emotions ON blog_post.id = blog_emotions.post_id GROUP BY blog_post.id ORDER BY blog_post.id DESC')
