@@ -1,9 +1,11 @@
-from blog.models import Post
-from .serializers import BlogSerializers
+from blog.models import Post,emotions
+from comments.models import Comment,Reply
+from .serializers import BlogSerializers,CommentSerializers,ReplySerializers,UserSerializers
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 class BlogViewSet(viewsets.ModelViewSet):
     # queryset = Post.objects.all()
@@ -15,10 +17,27 @@ class BlogViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
+        comments = Comment.objects.filter(post=pk)
+        comments_list = []
+        for comment in comments:
+            reply = Reply.objects.filter(comment=comment.id)
+            reply_serializer = ReplySerializers(reply,many=True)
+            thisdict = {
+                "id": comment.id,
+                "content": comment.content,
+                "date_posted":comment.date_posted,
+                "comment_author":{"id":comment.user_id,"username":comment.user.username},
+                "reply":reply_serializer.data
+                }
+            comments_list.append(thisdict)
+        emotion = emotions.objects.filter(post=pk).count()
         queryset = Post.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = BlogSerializers(user)
-        return Response(serializer.data)
+        post = get_object_or_404(queryset, pk=pk)
+        serializer = BlogSerializers(post)
+        post_obj = serializer.data
+        post_obj.update({'likes':emotion})
+        post_obj.update({"comments":comments_list})
+        return Response(post_obj)
 
     @action(detail=True, methods=['get'])
     def user_posts(self, request, pk=None):

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from blog.models import Post
+from comments.models import Comment,Reply
 from django.contrib.auth.models import User
 
 
@@ -16,3 +17,15 @@ class BlogSerializers(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = ('id','title', 'content', 'date_posted', 'author_id', 'author')
+
+
+class CommentSerializers(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id','content')
+
+class ReplySerializers(serializers.HyperlinkedModelSerializer):
+    user = UserSerializers(read_only=True)
+    class Meta:
+        model = Reply
+        fields = ('id','content','user')
