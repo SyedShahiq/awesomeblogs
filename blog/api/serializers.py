@@ -20,9 +20,10 @@ class BlogSerializers(serializers.HyperlinkedModelSerializer):
 
 
 class CommentSerializers(serializers.HyperlinkedModelSerializer):
+    post_id = serializers.IntegerField()
     class Meta:
         model = Comment
-        fields = ('id','content')
+        fields = ('id','content','post_id')
 
 class ReplySerializers(serializers.HyperlinkedModelSerializer):
     user = UserSerializers(read_only=True)

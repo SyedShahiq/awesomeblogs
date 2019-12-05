@@ -17,7 +17,7 @@ class BlogViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        comments = Comment.objects.filter(post=pk)
+        comments = Comment.objects.filter(post=pk).order_by('-id')
         comments_list = []
         for comment in comments:
             reply = Reply.objects.filter(comment=comment.id)
@@ -44,3 +44,7 @@ class BlogViewSet(viewsets.ModelViewSet):
         queryset = Post.objects.filter(author=pk).order_by('-id')
         serializer = BlogSerializers(queryset, many=True)
         return Response(serializer.data)
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializers
