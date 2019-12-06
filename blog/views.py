@@ -1,6 +1,7 @@
 import json
 import redis
 
+from ast import literal_eval
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -14,15 +15,20 @@ from comments.models import Comment,Reply
 from comments.forms import commentForm
 from .forms import PostEditForm
 from .models import Post,emotions
+from phpserialize import *
 
-# Create your views here.
 def home_view(request,*arg,**kwargs):
-    r = redis.Redis(host='127.0.0.1', port=6379, db=0)
-    user = json.loads(r.get('user'))
-    user_obj = user['user']
-    try_login = authenticate(username=user_obj['username'],password=user_obj['password'])
-    login(request,try_login)
-    return render(request,'home.html',{})
+	r = redis.Redis(host='127.0.0.1', port=6379, db=0,decode_responses=True)
+	keys = r.keys("PHPREDIS_SESSION:*")
+	user_key = str(keys[0])
+	print(user_key)
+	user_bytes = r.get(user_key)
+	user_obj = loads(user_bytes.encode('utf-8'))
+	user = user_obj[b'user'].decode('utf-8')
+	user_details = json.loads(user)
+	try_login = authenticate(username=user_details['username'],password=user_details['password'])
+	login(request,try_login)
+	return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
 	posts = Post.objects.raw('SELECT blog_post.id , blog_post.title ,blog_post.content,blog_post.date_posted,blog_post.author_id, COUNT(blog_emotions.post_id) as count FROM blog_post LEFT JOIN blog_emotions ON blog_post.id = blog_emotions.post_id GROUP BY blog_post.id ORDER BY blog_post.id DESC')
