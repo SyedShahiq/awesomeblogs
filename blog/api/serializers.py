@@ -27,7 +27,8 @@ class CommentSerializers(serializers.HyperlinkedModelSerializer):
 
 class ReplySerializers(serializers.HyperlinkedModelSerializer):
     user = UserSerializers(read_only=True)
-    comment_id = serializers.ImageField()
+    comment_id = serializers.IntegerField()
+    user_id = serializers.IntegerField()
     class Meta:
         model = Reply
-        fields = ('id','content','comment_id','user')
+        fields = ('id','content','comment_id','user_id','user')

@@ -18,16 +18,16 @@ from .models import Post,emotions
 from phpserialize import *
 
 def home_view(request,*arg,**kwargs):
-	r = redis.Redis(host='127.0.0.1', port=6379, db=0,decode_responses=True)
-	keys = r.keys("PHPREDIS_SESSION:*")
-	user_key = str(keys[0])
-	print(user_key)
-	user_bytes = r.get(user_key)
-	user_obj = loads(user_bytes.encode('utf-8'))
-	user = user_obj[b'user'].decode('utf-8')
-	user_details = json.loads(user)
-	try_login = authenticate(username=user_details['username'],password=user_details['password'])
-	login(request,try_login)
+	# r = redis.Redis(host='127.0.0.1', port=6379, db=0,decode_responses=True)
+	# keys = r.keys("PHPREDIS_SESSION:*")
+	# user_key = str(keys[0])
+	# print(user_key)
+	# user_bytes = r.get(user_key)
+	# user_obj = loads(user_bytes.encode('utf-8'))
+	# user = user_obj[b'user'].decode('utf-8')
+	# user_details = json.loads(user)
+	# try_login = authenticate(username=user_details['username'],password=user_details['password'])
+	# login(request,try_login)
 	return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
