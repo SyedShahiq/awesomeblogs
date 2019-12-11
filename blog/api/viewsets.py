@@ -1,3 +1,6 @@
+import ast
+import json
+
 from blog.models import Post,emotions
 from comments.models import Comment,Reply
 from .serializers import BlogSerializers,CommentSerializers,ReplySerializers,UserSerializers
@@ -6,15 +9,26 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from blog.models import Post
 
 class BlogViewSet(viewsets.ModelViewSet):
     # queryset = Post.objects.all()
     # serializer_class = BlogSerializers
 
     def list(self, request):
-        queryset = Post.objects.all()
+        queryset = Post.objects.all().order_by('-id')
         serializer = BlogSerializers(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+        body = self.request.body
+        body = ast.literal_eval(body.decode('utf-8'))
+        title = body['title']
+        content = body['content']
+        author_id = body['author_id']
+        post = Post.objects.create(title=title,content=content,author_id=author_id)
+        print(post)
+        return Response({"data":'This is ok'})
 
     def retrieve(self, request, pk=None):
         comments = Comment.objects.filter(post=pk).order_by('-id')
