@@ -144,3 +144,11 @@ LOGOUT_REDIRECT_URL = 'posts'
 LOGIN_REDIRECT_URL = 'posts'
 
 LOGIN_URL = 'Login'
+
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS = {
+    'host': 'localhost',
+    'port': 6379,
+    'db': 0,
+    'prefix': 'django_session',
+}

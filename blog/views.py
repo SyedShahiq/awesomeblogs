@@ -1,5 +1,7 @@
 import json
 import redis
+import pickle
+import base64
 
 from ast import literal_eval
 from django.shortcuts import render,redirect
@@ -28,6 +30,9 @@ def home_view(request,*arg,**kwargs):
 	# user_details = json.loads(user)
 	# try_login = authenticate(username=user_details['username'],password=user_details['password'])
 	# login(request,try_login)
+	request.session['username'] = 'Shahiq'
+	request.session['test'] = 'Test'
+	request.session['another'] = 'Yet Another'
 	return render(request,'home.html',{})
 
 def posts_view(request,*arg,**kwargs):
